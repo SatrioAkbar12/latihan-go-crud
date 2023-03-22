@@ -5,7 +5,7 @@ import (
 	"github.com/labstack/echo"
 )
 
-func UserRoutes(e echo.Echo) {
+func UserRoutes(e *echo.Echo) {
 	e.GET("/user", controllers.GetUsers)
 	e.POST("/user", controllers.CreateUser)
 	e.GET("/user/:id", controllers.GetUserByID)
