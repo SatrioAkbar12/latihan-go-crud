@@ -35,6 +35,7 @@ func CreateUser(e echo.Context) error {
 
 	user := models.User{}
 
+	e.Bind(&user)
 	db.Create(&user)
 
 	fmt.Println(user)
