@@ -35,7 +35,13 @@ func CreateUser(e echo.Context) error {
 
 	user := models.User{}
 
-	e.Bind(&user)
+	if err := e.Bind(&user); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	if err := e.Validate(&user); err != nil {
+		return err
+	}
+
 	db.Create(&user)
 
 	fmt.Println(user)
@@ -50,7 +56,14 @@ func UpdateUser(e echo.Context) error {
 	id := e.Param("id")
 
 	db.First(&user, id)
-	e.Bind(&user)
+
+	if err := e.Bind(&user); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	if err := e.Validate(&user); err != nil {
+		return err
+	}
+
 	db.Save(&user)
 
 	fmt.Println(user)
